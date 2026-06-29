@@ -2,54 +2,58 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>BondStats Portfolio Risk Check</title>
 
 <style>
 :root{
---bg:#0b1020;
---panel:#141c31;
---card:#202c4d;
---border:#2e3b63;
---accent:#58a6ff;
---success:#00d4a6;
+--bg:#071021;
+--panel:#111b33;
+--card:#16254a;
+--card2:#10203f;
+--border:#2a4275;
+--accent:#35b7ff;
+--success:#00e0b0;
 --danger:#ff5d73;
---warning:#ffb648;
---text:#f2f6ff;
---muted:#9fb0d3;
---radius:18px;
+--warning:#ffbd4a;
+--text:#f4f8ff;
+--muted:#a7b8db;
+--radius:16px;
 }
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+html,body{
+width:100%;
+min-height:100%;
+overflow-x:hidden;
 }
 
 body{
-background:radial-gradient(circle at top,#1b2955,#0b1020 60%);
+font-family:Inter,Segoe UI,Arial,sans-serif;
+background:linear-gradient(135deg,#081426,#0b1f4a 55%,#081426);
 color:var(--text);
-padding:18px;
+padding:14px;
 }
 
 .container{
-max-width:1450px;
-margin:auto;
-display:flex;
-flex-direction:column;
-gap:20px;
+width:100%;
+max-width:1180px;
+margin:0 auto;
 }
 
 header{
-display:flex;
-justify-content:space-between;
-align-items:center;
+margin-bottom:18px;
 }
 
 .logo{
-font-size:30px;
-font-weight:800;
+font-size:clamp(24px,5vw,34px);
+font-weight:900;
+letter-spacing:-1px;
 }
 
 .logo span{
@@ -57,180 +61,205 @@ color:var(--success);
 }
 
 .subtitle{
-margin-top:6px;
 color:var(--muted);
 font-size:14px;
+margin-top:4px;
 }
 
-.grid{
+.app{
 display:grid;
-grid-template-columns:380px 1fr;
-gap:20px;
+grid-template-columns:minmax(260px,340px) minmax(0,1fr);
+gap:18px;
+align-items:start;
+}
+
+.panel,
+.card,
+.chartCard,
+.tip,
+.assetsBox{
+background:linear-gradient(180deg,rgba(31,58,120,.88),rgba(10,25,56,.92));
+border:1px solid var(--border);
+border-radius:var(--radius);
+box-shadow:0 20px 60px rgba(0,0,0,.22);
 }
 
 .panel{
-background:#141c31;
-border:1px solid var(--border);
-border-radius:var(--radius);
-padding:20px;
+padding:18px;
+position:sticky;
+top:14px;
 }
 
 .panel h2{
-margin-bottom:18px;
+font-size:24px;
+margin-bottom:16px;
 }
 
 label{
 display:block;
-margin-bottom:6px;
+color:var(--text);
 font-size:13px;
-color:var(--muted);
+font-weight:700;
+margin:12px 0 6px;
 }
 
 input,
 select{
 width:100%;
-padding:12px;
-margin-bottom:14px;
-background:#10182d;
-border:1px solid var(--border);
+height:42px;
+background:#091a36;
+border:1px solid #3d68ad;
 border-radius:12px;
 color:white;
+padding:0 12px;
+font-size:14px;
 outline:none;
 }
 
 input:focus,
 select:focus{
 border-color:var(--accent);
+box-shadow:0 0 0 3px rgba(53,183,255,.18);
 }
 
 button{
-border:none;
+border:0;
 cursor:pointer;
-padding:12px 16px;
 border-radius:12px;
-font-weight:700;
+font-weight:800;
 transition:.2s;
 }
 
 .primary{
 width:100%;
-background:linear-gradient(135deg,var(--accent),#4b6fff);
+height:44px;
+margin-top:16px;
+background:linear-gradient(135deg,#22c6ff,#2187ff);
 color:white;
 }
 
-.primary:hover{
-transform:translateY(-2px);
+.main{
+min-width:0;
 }
 
 .stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:15px;
-margin-bottom:18px;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:14px;
+margin-bottom:16px;
 }
 
 .card{
-background:#202c4d;
-border:1px solid var(--border);
-border-radius:16px;
 padding:16px;
+min-width:0;
 }
 
 .card h3{
 font-size:13px;
-color:var(--muted);
-margin-bottom:10px;
-font-weight:500;
+line-height:1.2;
+color:var(--text);
+margin-bottom:12px;
 }
 
 .big{
-font-size:30px;
-font-weight:800;
+font-size:clamp(26px,4vw,34px);
+font-weight:900;
+line-height:1;
+word-break:break-word;
 }
 
 .health{
-margin-top:10px;
 height:16px;
-background:#0d1528;
+background:#08152b;
 border-radius:999px;
 overflow:hidden;
+margin-top:12px;
 }
 
 .healthFill{
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#ff5d73,#ffb648,#00d4a6);
+background:linear-gradient(90deg,#ff5d73,#ffbd4a,#00e0b0);
 transition:.4s;
 }
 
-.assetsTable{
-overflow:auto;
-border-radius:16px;
-border:1px solid var(--border);
+.assetsBox{
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.tableScroll{
+width:100%;
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-min-width:860px;
+min-width:720px;
 }
 
-th,
-td{
+th,td{
 padding:12px;
 text-align:left;
-border-bottom:1px solid rgba(255,255,255,.05);
+border-bottom:1px solid rgba(255,255,255,.08);
+font-size:14px;
 }
 
 th{
-background:#17213c;
+background:rgba(52,104,203,.35);
 font-size:13px;
 }
 
 .removeBtn{
 background:var(--danger);
 color:white;
-padding:8px 12px;
-border-radius:8px;
+padding:8px 10px;
+border-radius:10px;
 }
 
 .sectionTitle{
-margin:20px 0 15px;
-font-size:20px;
-font-weight:700;
-}
-
-.chartGrid{
+font-size:22px;
+font-weight:900;
+margin:18px 0 12px;
+}.chartGrid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:18px;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:14px;
 }
 
 .chartCard{
-background:#1a2440;
-border:1px solid var(--border);
 padding:16px;
-border-radius:16px;
+min-width:0;
 }
 
 .chartCard h4{
+font-size:16px;
 margin-bottom:14px;
 }
 
 .barItem{
-margin-bottom:14px;
+margin-bottom:13px;
 }
 
 .barHeader{
 display:flex;
 justify-content:space-between;
-margin-bottom:6px;
+gap:10px;
 font-size:13px;
+margin-bottom:6px;
+}
+
+.barHeader span:first-child{
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
 }
 
 .barWrap{
 height:12px;
-background:#0f182c;
+background:#08152b;
 border-radius:999px;
 overflow:hidden;
 }
@@ -239,46 +268,109 @@ overflow:hidden;
 height:100%;
 width:0%;
 background:linear-gradient(90deg,var(--success),var(--accent));
+border-radius:999px;
 transition:.4s;
 }
 
 .intelligence{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:15px;
-margin-top:18px;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:14px;
 }
 
 .tip{
-background:#19233f;
-border-left:5px solid var(--success);
-border-radius:14px;
 padding:16px;
+border-left:5px solid var(--success);
 }
 
 .tipTitle{
-font-weight:700;
+font-weight:900;
 margin-bottom:8px;
 }
 
 .tipText{
 font-size:14px;
-line-height:1.5;
+line-height:1.45;
 color:var(--muted);
 }
 
-@media(max-width:980px){
-.grid{
+@media(max-width:1050px){
+.container{
+max-width:920px;
+}
+.app{
+grid-template-columns:1fr;
+}
+.panel{
+position:relative;
+top:auto;
+}
+.formGrid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:0 14px;
+}
+.stats{
+grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.chartGrid{
+grid-template-columns:1fr;
+}
+.intelligence{
 grid-template-columns:1fr;
 }
 }
 
-@media(max-width:650px){
+@media(max-width:620px){
+body{
+padding:10px;
+}
+.panel{
+padding:14px;
+}
+.formGrid{
+grid-template-columns:1fr;
+}
 .stats{
 grid-template-columns:1fr;
+gap:10px;
+}
+.card,
+.chartCard,
+.tip{
+padding:14px;
+}
+table{
+min-width:640px;
+}
+th,td{
+padding:10px;
+font-size:13px;
+}
+.sectionTitle{
+font-size:19px;
+}
+}
+
+@media(max-width:420px){
+body{
+padding:8px;
 }
 .logo{
 font-size:24px;
+}
+.subtitle{
+font-size:13px;
+}
+.panel h2{
+font-size:21px;
+}
+input,
+select{
+height:40px;
+}
+.primary{
+height:42px;
 }
 }
 </style>
@@ -289,21 +381,23 @@ font-size:24px;
 <div class="container">
 
 <header>
-<div>
 <div class="logo">Bond<span>Stats</span></div>
 <div class="subtitle">Portfolio Risk Check</div>
-</div>
 </header>
 
-<div class="grid">
+<div class="app">
 
-<div class="panel">
-
+<aside class="panel">
 <h2>Add Asset</h2>
 
+<div class="formGrid">
+
+<div>
 <label>Asset Name</label>
 <input id="assetName" placeholder="e.g. Apple Inc.">
+</div>
 
+<div>
 <label>Asset Type</label>
 <select id="assetType">
 <option>Stock</option>
@@ -314,10 +408,14 @@ font-size:24px;
 <option>Cash</option>
 <option>Real Estate</option>
 </select>
+</div>
 
+<div>
 <label>Allocation (%)</label>
 <input id="allocation" type="number" min="0" max="100" placeholder="20">
+</div>
 
+<div>
 <label>Region</label>
 <select id="region">
 <option>North America</option>
@@ -328,7 +426,9 @@ font-size:24px;
 <option>Middle East</option>
 <option>Global</option>
 </select>
+</div>
 
+<div>
 <label>Sector</label>
 <select id="sector">
 <option>Technology</option>
@@ -341,25 +441,27 @@ font-size:24px;
 <option>Government</option>
 <option>Mixed</option>
 </select>
+</div>
 
+<div>
 <label>Risk Level</label>
 <select id="risk">
 <option value="1">Very Low</option>
 <option value="2">Low</option>
-<option value="3">Medium</option>
+<option value="3" selected>Medium</option>
 <option value="4">High</option>
 <option value="5">Very High</option>
 </select>
-
-<button class="primary" onclick="addAsset()">
-Add Asset
-</button>
+</div>
 
 </div>
 
-<div>
+<button class="primary" onclick="addAsset()">Add Asset</button>
+</aside>
 
-<div class="stats">
+<main class="main">
+
+<section class="stats">
 
 <div class="card">
 <h3>Portfolio Health Score</h3>
@@ -373,7 +475,6 @@ Add Asset
 <h3>Diversification Score</h3>
 <div class="big" id="divScore">0</div>
 </div>
-
 <div class="card">
 <h3>Overall Risk</h3>
 <div class="big" id="riskScore">-</div>
@@ -384,12 +485,11 @@ Add Asset
 <div class="big" id="totalAllocation">0%</div>
 </div>
 
-</div>
+</section>
 
-<div class="assetsTable">
-
+<section class="assetsBox">
+<div class="tableScroll">
 <table>
-
 <thead>
 <tr>
 <th>Asset</th>
@@ -401,18 +501,14 @@ Add Asset
 <th>Action</th>
 </tr>
 </thead>
-
 <tbody id="assetTableBody"></tbody>
-
 </table>
-
 </div>
+</section>
 
-<div class="sectionTitle">
-Portfolio Analytics
-</div>
+<div class="sectionTitle">Portfolio Analytics</div>
 
-<div class="chartGrid">
+<section class="chartGrid">
 
 <div class="chartCard">
 <h4>Asset Mix</h4>
@@ -429,27 +525,26 @@ Portfolio Analytics
 <div id="sectorChart"></div>
 </div>
 
-</div>
+</section>
 
-<div class="sectionTitle">
-Portfolio Intelligence
-</div>
+<div class="sectionTitle">Portfolio Intelligence</div>
 
-<div class="intelligence" id="tips"></div>
+<section class="intelligence" id="tips"></section>
+
+</main>
 
 </div>
 
 </div>
 
 <script>
-
 let assets=JSON.parse(localStorage.getItem("bondstats_assets"))||[];
 
 function saveData(){
 localStorage.setItem("bondstats_assets",JSON.stringify(assets));
 }
-  function addAsset(){
 
+function addAsset(){
 const name=document.getElementById("assetName").value.trim();
 const type=document.getElementById("assetType").value;
 const allocation=parseFloat(document.getElementById("allocation").value);
@@ -457,442 +552,205 @@ const region=document.getElementById("region").value;
 const sector=document.getElementById("sector").value;
 const risk=parseInt(document.getElementById("risk").value);
 
-if(!name || isNaN(allocation) || allocation<=0){
+if(!name||isNaN(allocation)||allocation<=0){
 alert("Please enter an asset name and a valid allocation.");
 return;
 }
 
-assets.push({
-id:Date.now(),
-name,
-type,
-allocation,
-region,
-sector,
-risk
-});
-
+assets.push({id:Date.now(),name,type,allocation,region,sector,risk});
 saveData();
 clearForm();
 render();
-
 }
 
 function clearForm(){
-
 document.getElementById("assetName").value="";
 document.getElementById("allocation").value="";
 document.getElementById("assetType").selectedIndex=0;
 document.getElementById("region").selectedIndex=0;
 document.getElementById("sector").selectedIndex=0;
-document.getElementById("risk").selectedIndex=2;
-
+document.getElementById("risk").value="3";
 }
 
 function deleteAsset(id){
-
-assets=assets.filter(a=>a.id!==id);
-
+assets=assets.filter(asset=>asset.id!==id);
 saveData();
 render();
-
-}
-
-function riskLabel(v){
-
-if(v<=1.5) return "Very Low";
-if(v<=2.5) return "Low";
-if(v<=3.5) return "Medium";
-if(v<=4.5) return "High";
-return "Very High";
-
-}
-
-function riskBadge(v){
-
-const label=riskLabel(v);
-
-if(v<=2){
-return `<span style="color:#00d4a6;font-weight:700">${label}</span>`;
-}
-
-if(v<=3.5){
-return `<span style="color:#ffb648;font-weight:700">${label}</span>`;
-}
-
-return `<span style="color:#ff5d73;font-weight:700">${label}</span>`;
-
-}
-
-function totalAllocation(){
-
-return assets.reduce((sum,a)=>sum+a.allocation,0);
-
-}
-
-function weightedRisk(){
-
-const total=totalAllocation();
-
-if(total===0) return 0;
-
-return assets.reduce(
-(sum,a)=>sum+(a.risk*a.allocation),
-0
-)/total;
-
-}
-
-function sumBy(key){
-
-const obj={};
-
-assets.forEach(asset=>{
-
-if(!obj[asset[key]]) obj[asset[key]]=0;
-
-obj[asset[key]]+=asset.allocation;
-
-});
-
-return obj;
-
-}
-
-function diversificationScore(){
-
-if(assets.length===0) return 0;
-
-const types=Object.keys(sumBy("type")).length;
-const regions=Object.keys(sumBy("region")).length;
-const sectors=Object.keys(sumBy("sector")).length;
-
-let score=
-(types*18)+
-(regions*14)+
-(sectors*12)+
-Math.min(assets.length*5,20);
-
-["type","region","sector"].forEach(group=>{
-
-const values=sumBy(group);
-
-Object.values(values).forEach(v=>{
-
-if(v>45) score-=8;
-if(v>60) score-=12;
-
-});
-
-});
-
-score=Math.max(0,Math.min(100,Math.round(score)));
-
-return score;
-
-}
-
-function portfolioHealth(){
-
-const allocation=totalAllocation();
-
-const diversification=diversificationScore();
-
-const risk=weightedRisk();
-
-let allocationScore=
-100-Math.abs(100-allocation)*1.6;
-
-allocationScore=
-Math.max(0,Math.min(100,allocationScore));
-
-let riskScore=100;
-
-if(risk>3.2){
-riskScore-=((risk-3.2)*22);
-}
-
-if(risk<1.8){
-riskScore-=((1.8-risk)*12);
-}
-
-let health=
-allocationScore*0.35+
-diversification*0.45+
-riskScore*0.20;
-
-health=Math.round(
-Math.max(0,Math.min(100,health))
-);
-
-return health;
-
 }
 
 function escapeHTML(text){
-
 return text.replace(/[&<>"']/g,function(c){
+return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
+});
+}
 
-return{
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[c];
+function totalAllocation(){
+return assets.reduce((sum,asset)=>sum+asset.allocation,0);
+}
 
+function sumBy(key){
+const result={};
+assets.forEach(asset=>{
+if(!result[asset[key]])result[asset[key]]=0;
+result[asset[key]]+=asset.allocation;
+});
+return result;
+}
+
+function weightedRisk(){
+const total=totalAllocation();
+if(total===0)return 0;
+return assets.reduce((sum,asset)=>sum+(asset.risk*asset.allocation),0)/total;
+}
+
+function riskLabel(value){
+if(value<=1.5)return"Very Low";
+if(value<=2.5)return"Low";
+if(value<=3.5)return"Medium";
+if(value<=4.5)return"High";
+return"Very High";
+}
+  function riskBadge(value){
+const label=riskLabel(value);
+if(value<=2)return`<span style="color:#00e0b0;font-weight:900">${label}</span>`;
+if(value<=3.5)return`<span style="color:#ffbd4a;font-weight:900">${label}</span>`;
+return`<span style="color:#ff5d73;font-weight:900">${label}</span>`;
+}
+
+function diversificationScore(){
+if(assets.length===0)return 0;
+const types=Object.keys(sumBy("type")).length;
+const regions=Object.keys(sumBy("region")).length;
+const sectors=Object.keys(sumBy("sector")).length;
+let score=(types*18)+(regions*14)+(sectors*12)+Math.min(assets.length*5,20);
+
+["type","region","sector"].forEach(key=>{
+Object.values(sumBy(key)).forEach(value=>{
+if(value>45)score-=8;
+if(value>60)score-=12;
+});
 });
 
+return Math.max(0,Math.min(100,Math.round(score)));
+}
+
+function portfolioHealth(){
+const total=totalAllocation();
+const div=diversificationScore();
+const risk=weightedRisk();
+let allocationScore=100-Math.abs(100-total)*1.6;
+allocationScore=Math.max(0,Math.min(100,allocationScore));
+let riskScore=100;
+if(risk>3.2)riskScore-=((risk-3.2)*22);
+if(risk<1.8)riskScore-=((1.8-risk)*12);
+return Math.max(0,Math.min(100,Math.round((allocationScore*.35)+(div*.45)+(riskScore*.20))));
 }
 
 function renderTable(){
-
-const tbody=document.getElementById("assetTableBody");
-
+const body=document.getElementById("assetTableBody");
 if(assets.length===0){
-
-tbody.innerHTML=`
-<tr>
-<td colspan="7"
-style="text-align:center;padding:24px;color:#9fb0d3">
-No assets added yet.
-</td>
-</tr>
-`;
-
+body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:22px;color:#a7b8db">No assets added yet.</td></tr>`;
 return;
-
 }
-
-tbody.innerHTML=assets.map(asset=>`
-
+body.innerHTML=assets.map(asset=>`
 <tr>
-
 <td><strong>${escapeHTML(asset.name)}</strong></td>
-
 <td>${asset.type}</td>
-
 <td>${asset.allocation.toFixed(1)}%</td>
-
 <td>${asset.region}</td>
-
 <td>${asset.sector}</td>
-
 <td>${riskBadge(asset.risk)}</td>
-
-<td>
-
-<button
-class="removeBtn"
-onclick="deleteAsset(${asset.id})">
-
-Delete
-
-</button>
-
-</td>
-
+<td><button class="removeBtn" onclick="deleteAsset(${asset.id})">Delete</button></td>
 </tr>
-
 `).join("");
-
 }
-  function renderBars(targetId,data){
 
+function renderBars(targetId,data){
 const target=document.getElementById(targetId);
 const entries=Object.entries(data).sort((a,b)=>b[1]-a[1]);
-
 if(entries.length===0){
-target.innerHTML=`<div style="color:#9fb0d3;font-size:14px">No data available.</div>`;
+target.innerHTML=`<div style="color:#a7b8db;font-size:14px">No data available.</div>`;
 return;
 }
-
 target.innerHTML=entries.map(([label,value])=>`
 <div class="barItem">
-<div class="barHeader">
-<span>${label}</span>
-<span>${value.toFixed(1)}%</span>
-</div>
-<div class="barWrap">
-<div class="bar" style="width:${Math.min(value,100)}%"></div>
-</div>
+<div class="barHeader"><span>${label}</span><span>${value.toFixed(1)}%</span></div>
+<div class="barWrap"><div class="bar" style="width:${Math.min(value,100)}%"></div></div>
 </div>
 `).join("");
-
 }
 
 function generateTips(){
-
 const tips=[];
 const total=totalAllocation();
 const div=diversificationScore();
 const risk=weightedRisk();
-
 const types=sumBy("type");
 const regions=sumBy("region");
 const sectors=sumBy("sector");
 
 if(assets.length===0){
-tips.push({
-title:"Start Your Portfolio",
-text:"Add your first asset to calculate health, diversification, risk and exposure metrics."
-});
-return tips;
+return[{title:"Start Your Portfolio",text:"Add your first asset to calculate health, diversification, risk and exposure metrics."}];
 }
 
-if(total<95){
-tips.push({
-title:"Portfolio Is Underallocated",
-text:`Your total allocation is ${total.toFixed(1)}%. You still have ${(100-total).toFixed(1)}% unassigned capital.`
-});
-}
-
-if(total>105){
-tips.push({
-title:"Portfolio Is Overallocated",
-text:`Your total allocation is ${total.toFixed(1)}%. Reduce positions by ${(total-100).toFixed(1)}% to get closer to 100%.`
-});
-}
-
-if(div>=80){
-tips.push({
-title:"Strong Diversification",
-text:"Your portfolio is well spread across asset types, regions and sectors."
-});
-}
-
-if(div<50){
-tips.push({
-title:"Improve Diversification",
-text:"Add more asset types, regions or sectors to reduce concentration risk."
-});
-}
+if(total<95)tips.push({title:"Portfolio Is Underallocated",text:`Your total allocation is ${total.toFixed(1)}%. You still have ${(100-total).toFixed(1)}% unassigned capital.`});
+if(total>105)tips.push({title:"Portfolio Is Overallocated",text:`Your total allocation is ${total.toFixed(1)}%. Reduce positions by ${(total-100).toFixed(1)}% to get closer to 100%.`});
+if(div>=80)tips.push({title:"Strong Diversification",text:"Your portfolio is well spread across asset types, regions and sectors."});
+if(div<50)tips.push({title:"Improve Diversification",text:"Add more asset types, regions or sectors to reduce concentration risk."});
 
 Object.entries(types).forEach(([name,value])=>{
-if(value>50){
-tips.push({
-title:`High ${name} Concentration`,
-text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Check whether this matches your risk tolerance.`
-});
-}
+if(value>50)tips.push({title:`High ${name} Concentration`,text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Check whether this matches your risk tolerance.`});
 });
 
 Object.entries(regions).forEach(([name,value])=>{
-if(value>55){
-tips.push({
-title:"Regional Concentration Risk",
-text:`${value.toFixed(1)}% of your portfolio is exposed to ${name}. Broader regional exposure may reduce volatility.`
-});
-}
+if(value>55)tips.push({title:"Regional Concentration Risk",text:`${value.toFixed(1)}% of your portfolio is exposed to ${name}. Broader regional exposure may reduce volatility.`});
 });
 
 Object.entries(sectors).forEach(([name,value])=>{
-if(value>45){
-tips.push({
-title:"Sector Concentration Risk",
-text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Review dependence on a single market cycle.`
-});
-}
+if(value>45)tips.push({title:"Sector Concentration Risk",text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Review dependence on a single market cycle.`});
 });
 
-if(risk>=4){
-tips.push({
-title:"High Risk Profile",
-text:"Your weighted portfolio risk is high. Bonds, cash or broad ETFs may help reduce volatility."
-});
-}
+if(risk>=4)tips.push({title:"High Risk Profile",text:"Your weighted portfolio risk is high. Bonds, cash or broad ETFs may help reduce volatility."});
+if(risk>0&&risk<=2)tips.push({title:"Defensive Risk Profile",text:"Your portfolio is very defensive. Check whether the expected return still fits your long-term goals."});
+if(assets.length<4)tips.push({title:"Limited Number Of Holdings",text:"With fewer than four assets, your portfolio may be sensitive to single-position movements."});
 
-if(risk>0 && risk<=2){
-tips.push({
-title:"Defensive Risk Profile",
-text:"Your portfolio is very defensive. Check whether the expected return still fits your long-term goals."
-});
-}
-
-if(assets.length<4){
-tips.push({
-title:"Limited Number Of Holdings",
-text:"With fewer than four assets, your portfolio may be sensitive to single-position movements."
-});
-}
-
-if(tips.length===0){
-tips.push({
-title:"Balanced Setup",
-text:"Your portfolio metrics look stable. Continue reviewing allocation, risk and exposure regularly."
-});
-}
-
+if(tips.length===0)tips.push({title:"Balanced Setup",text:"Your portfolio metrics look stable. Continue reviewing allocation, risk and exposure regularly."});
 return tips.slice(0,8);
-
 }
 
 function renderTips(){
-
-const box=document.getElementById("tips");
-const tips=generateTips();
-
-box.innerHTML=tips.map(tip=>`
+document.getElementById("tips").innerHTML=generateTips().map(tip=>`
 <div class="tip">
 <div class="tipTitle">${tip.title}</div>
 <div class="tipText">${tip.text}</div>
 </div>
 `).join("");
-
 }
 
 function renderStats(){
-
 const total=totalAllocation();
 const div=diversificationScore();
 const health=portfolioHealth();
 const risk=weightedRisk();
 
-document.getElementById("totalAllocation").textContent=
-`${total.toFixed(1)}%`;
-
-document.getElementById("divScore").textContent=
-div;
-
-document.getElementById("healthScore").textContent=
-health;
-
-document.getElementById("healthFill").style.width=
-`${health}%`;
-
-document.getElementById("riskScore").innerHTML=
-risk===0 ? "-" : riskBadge(risk);
-
+document.getElementById("totalAllocation").textContent=`${total.toFixed(1)}%`;
+document.getElementById("divScore").textContent=div;
+document.getElementById("healthScore").textContent=health;
+document.getElementById("healthFill").style.width=`${health}%`;
+document.getElementById("riskScore").innerHTML=risk===0?"-":riskBadge(risk);
 }
-  function render(){
 
+function render(){
 renderStats();
 renderTable();
-
-renderBars(
-"assetMixChart",
-sumBy("type")
-);
-
-renderBars(
-"regionChart",
-sumBy("region")
-);
-
-renderBars(
-"sectorChart",
-sumBy("sector")
-);
-
+renderBars("assetMixChart",sumBy("type"));
+renderBars("regionChart",sumBy("region"));
+renderBars("sectorChart",sumBy("sector"));
 renderTips();
-
 }
 
 render();
-
 </script>
-
-</div>
 
 </body>
 </html>
