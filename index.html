@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BondStats Portfolio Risk Check</title>
+
+<style>
+:root{
+--bg:#0b1020;
+--panel:#141c31;
+--panel2:#1b2541;
+--card:#202c4d;
+--border:#2e3b63;
+--accent:#58a6ff;
+--accent2:#00d4a6;
+--danger:#ff5d73;
+--warning:#ffb648;
+--text:#f2f6ff;
+--muted:#9fb0d3;
+--radius:18px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+body{
+background:
+radial-gradient(circle at top,#1b2955,#0b1020 55%);
+color:var(--text);
+padding:18px;
+}
+
+.container{
+max-width:1450px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+letter-spacing:.5px;
+}
+
+.logo span{
+color:var(--accent2);
+}
+
+.subtitle{
+color:var(--muted);
+font-size:14px;
+margin-top:6px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:380px 1fr;
+gap:20px;
+}
+
+.panel{
+background:rgba(20,28,49,.95);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:20px;
+backdrop-filter:blur(12px);
+}
+
+.panel h2{
+margin-bottom:18px;
+font-size:20px;
+}
+
+label{
+display:block;
+font-size:13px;
+margin-bottom:6px;
+color:var(--muted);
+}
+
+input,select{
+width:100%;
+padding:12px;
+border-radius:12px;
+background:#10182d;
+border:1px solid #2b365b;
+color:white;
+margin-bottom:14px;
+outline:none;
+transition:.2s;
+}
+
+input:focus,
+select:focus{
+border-color:var(--accent);
+}
+
+button{
+border:none;
+cursor:pointer;
+padding:12px 16px;
+border-radius:12px;
+font-weight:700;
+transition:.2s;
+}
+
+.primary{
+background:linear-gradient(135deg,var(--accent),#4c6fff);
+color:white;
+width:100%;
+}
+
+.primary:hover{
+transform:translateY(-2px);
+}
+
+.secondary{
+background:#2d3d69;
+color:white;
+}
+
+.danger{
+background:var(--danger);
+color:white;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:18px;
+}
+
+.card{
+background:linear-gradient(180deg,#202d4c,#19243d);
+border:1px solid var(--border);
+border-radius:16px;
+padding:16px;
+}
+
+.card h3{
+font-size:13px;
+color:var(--muted);
+margin-bottom:10px;
+font-weight:500;
+}
+
+.big{
+font-size:30px;
+font-weight:800;
+}
+
+.assetsTable{
+overflow:auto;
+border-radius:16px;
+border:1px solid var(--border);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:850px;
+}
+
+th,td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+th{
+background:#17213c;
+font-size:13px;
+}
+
+td{
+font-size:14px;
+}
+
+.removeBtn{
+padding:8px 10px;
+border-radius:8px;
+background:var(--danger);
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.sectionTitle{
+font-size:19px;
+margin:18px 0 14px;
+}
+
+.chartGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:18px;
+}
+
+.chartCard{
+background:#1a2440;
+border:1px solid var(--border);
+padding:16px;
+border-radius:16px;
+}
+
+.chartCard h4{
+margin-bottom:16px;
+}
+
+.barItem{
+margin-bottom:14px;
+}
+
+.barHeader{
+display:flex;
+justify-content:space-between;
+margin-bottom:6px;
+font-size:13px;
+}
+
+.barWrap{
+height:12px;
+background:#10182b;
+border-radius:999px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:0%;
+border-radius:999px;
+background:linear-gradient(90deg,var(--accent2),var(--accent));
+transition:.4s;
+}
+
+.intelligence{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:15px;
+margin-top:18px;
+}
+
+.tip{
+background:#19233f;
+border-left:5px solid var(--accent2);
+padding:16px;
+border-radius:14px;
+}
+
+.tipTitle{
+font-weight:700;
+margin-bottom:8px;
+}
+
+.tipText{
+color:var(--muted);
+line-height:1.5;
+font-size:14px;
+}
+
+.health{
+height:16px;
+border-radius:999px;
+background:#111a2d;
+overflow:hidden;
+margin-top:12px;
+}
+
+.healthFill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff4b68,#ffc247,#2de28b);
+transition:.5s;
+}
+
+.footerSpace{
+height:10px;
+}
+
+@media(max-width:980px){
+.grid{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
+
+.big{
+font-size:24px;
+}
+}
+
+@media(max-width:640px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.logo{
+font-size:22px;
+}
+
+body{
+padding:12px;
+}
+
+.panel{
+padding:16px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<div>
+<div class="logo">Bond<span>Stats</span></div>
+<div class="subtitle">
+Portfolio Risk Check
+</div>
+</div>
+
+</header>
+
+<div class="grid">
+
+<div class="panel">
+
+<h2>Asset hinzufügen</h2>
+
+<label>Asset Name</label>
+<input id="assetName" placeholder="z.B. Apple">
+
+<label>Asset Type</label>
+<select id="assetType">
+<option>Stock</option>
+<option>Bond</option>
+<option>ETF</option>
+<option>Crypto</option>
+<option>Commodity</option>
+<option>Cash</option>
+<option>Real Estate</option>
+</select>
+
+<label>Allocation %</label>
+<input id="allocation" type="number" min="0" max="100" placeholder="20">
+
+<label>Region</label>
+<select id="region">
+<option>North America</option>
+<option>Europe</option>
+<option>Asia</option>
+<option>South America</option>
+<option>Africa</option>
+<option>Middle East</option>
+<option>Global</option>
+</select>
+
+<label>Sector</label>
+<select id="sector">
+<option>Technology</option>
+<option>Finance</option>
+<option>Healthcare</option>
+<option>Energy</option>
+<option>Consumer</option>
+<option>Industrial</option>
+<option>Utilities</option>
+<option>Government</option>
+<option>Mixed</option>
+</select>
+
+<label>Risk Level</label>
+<select id="risk">
+<option value="1">Very Low</option>
+<option value="2">Low</option>
+<option value="3">Medium</option>
+<option value="4">High</option>
+<option value="5">Very High</option>
+</select>
+
+<button class="primary" onclick="addAsset()">
+Asset hinzufügen
+</button>
+
+</div>
+
+<div>
+
+<div class="stats">
+
+<div class="card">
+<h3>Portfolio Health Score</h3>
+<div class="big" id="healthScore">0</div>
+<div class="health">
+<div class="healthFill" id="healthFill"></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Diversification Score</h3>
+<div class="big" id="divScore">0</div>
+</div>
+
+<div class="card">
+<h3>Risk Level</h3>
+<div class="big" id="riskScore">-</div>
+</div>
+
+<div class="card">
+<h3>Total Allocation</h3>
+<div class="big" id="totalAllocation">0%</div>
+</div>
+
+</div>
+
+<div class="assetsTable">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Allocation</th>
+<th>Region</th>
+<th>Sector</th>
+<th>Risk</th>
+<th></th>
+</tr>
+
+</thead>
+
+<tbody id="assetTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="sectionTitle">
+Portfolio Analytics
+</div>
+
+<div class="chartGrid">
+
+<div class="chartCard">
+
+<h4>Asset Mix</h4>
+
+<div id="assetMixChart"></div>
+
+</div>
+
+<div class="chartCard">
+
+<h4>Region Exposure</h4>
+
+<div id="regionChart"></div>
+
+</div>
+
+<div class="chartCard">
+
+<h4>Sector Exposure</h4>
+
+<div id="sectorChart"></div>
+
+</div>
+
+</div>
+
+<div class="sectionTitle">
+Portfolio Intelligence
+</div>
+
+<div
+class="intelligence"
+id="tips">
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let assets=JSON.parse(localStorage.getItem("bondstats_assets"))||[];
+
+function saveData(){
+localStorage.setItem(
+"bondstats_assets",
+JSON.stringify(assets)
+);
+}
+  function addAsset(){
+
+const name=document.getElementById("assetName").value.trim();
+const type=document.getElementById("assetType").value;
+const allocation=parseFloat(document.getElementById("allocation").value);
+const region=document.getElementById("region").value;
+const sector=document.getElementById("sector").value;
+const risk=parseInt(document.getElementById("risk").value);
+
+if(!name||isNaN(allocation)||allocation<=0){
+alert("Bitte Asset Name und gültige Allocation eingeben.");
+return;
+}
+
+assets.push({
+id:Date.now(),
+name,
+type,
+allocation,
+region,
+sector,
+risk
+});
+
+saveData();
+clearForm();
+render();
+
+}
+
+function clearForm(){
+document.getElementById("assetName").value="";
+document.getElementById("allocation").value="";
+document.getElementById("assetType").selectedIndex=0;
+document.getElementById("region").selectedIndex=0;
+document.getElementById("sector").selectedIndex=0;
+document.getElementById("risk").selectedIndex=2;
+}
+
+function deleteAsset(id){
+assets=assets.filter(asset=>asset.id!==id);
+saveData();
+render();
+}
+
+function riskText(value){
+
+if(value<=1.5)return"Very Low";
+if(value<=2.5)return"Low";
+if(value<=3.5)return"Medium";
+if(value<=4.5)return"High";
+return"Very High";
+
+}
+
+function riskBadge(value){
+
+const label=riskText(value);
+
+if(value<=2){
+return `<span style="color:#2de28b;font-weight:700">${label}</span>`;
+}
+
+if(value<=3.5){
+return `<span style="color:#ffb648;font-weight:700">${label}</span>`;
+}
+
+return `<span style="color:#ff5d73;font-weight:700">${label}</span>`;
+
+}
+
+function sumBy(key){
+
+const result={};
+
+assets.forEach(asset=>{
+if(!result[asset[key]])result[asset[key]]=0;
+result[asset[key]]+=asset.allocation;
+});
+
+return result;
+
+}
+
+function totalAllocation(){
+
+return assets.reduce((sum,asset)=>sum+asset.allocation,0);
+
+}
+
+function weightedRisk(){
+
+const total=totalAllocation();
+
+if(total===0)return 0;
+
+return assets.reduce(
+(sum,asset)=>sum+(asset.risk*asset.allocation),
+0
+)/total;
+
+}
+
+function diversificationScore(){
+
+if(assets.length===0)return 0;
+
+const typeCount=Object.keys(sumBy("type")).length;
+const regionCount=Object.keys(sumBy("region")).length;
+const sectorCount=Object.keys(sumBy("sector")).length;
+
+let concentrationPenalty=0;
+
+["type","region","sector"].forEach(key=>{
+const groups=sumBy(key);
+Object.values(groups).forEach(value=>{
+if(value>45)concentrationPenalty+=8;
+if(value>60)concentrationPenalty+=12;
+});
+});
+
+let base=
+(typeCount*18)+
+(regionCount*14)+
+(sectorCount*12)+
+Math.min(assets.length*5,20);
+
+let score=base-concentrationPenalty;
+
+return Math.max(0,Math.min(100,Math.round(score)));
+
+}
+
+function healthScore(){
+
+const total=totalAllocation();
+const div=diversificationScore();
+const risk=weightedRisk();
+
+let allocationScore=100-Math.abs(100-total)*1.6;
+allocationScore=Math.max(0,Math.min(100,allocationScore));
+
+let riskScore=100;
+
+if(risk>3.2)riskScore-=((risk-3.2)*22);
+if(risk<1.8)riskScore-=((1.8-risk)*12);
+
+let score=
+allocationScore*.35+
+div*.45+
+riskScore*.20;
+
+return Math.max(0,Math.min(100,Math.round(score)));
+
+}
+
+function renderTable(){
+
+const body=document.getElementById("assetTableBody");
+
+if(assets.length===0){
+body.innerHTML=`
+<tr>
+<td colspan="7" style="text-align:center;color:#9fb0d3;padding:24px">
+Noch keine Assets hinzugefügt.
+</td>
+</tr>
+`;
+return;
+}
+
+body.innerHTML=assets.map(asset=>`
+<tr>
+<td><strong>${escapeHTML(asset.name)}</strong></td>
+<td>${asset.type}</td>
+<td>${asset.allocation.toFixed(1)}%</td>
+<td>${asset.region}</td>
+<td>${asset.sector}</td>
+<td>${riskBadge(asset.risk)}</td>
+<td>
+<button class="removeBtn" onclick="deleteAsset(${asset.id})">
+Löschen
+</button>
+</td>
+</tr>
+`).join("");
+
+}
+
+function escapeHTML(str){
+
+return str.replace(/[&<>"']/g,function(match){
+return{
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[match];
+});
+
+}
+  function renderBars(targetId,data){
+
+const target=document.getElementById(targetId);
+const entries=Object.entries(data).sort((a,b)=>b[1]-a[1]);
+
+if(entries.length===0){
+target.innerHTML=`<div style="color:#9fb0d3;font-size:14px">Keine Daten vorhanden.</div>`;
+return;
+}
+
+target.innerHTML=entries.map(([label,value])=>`
+<div class="barItem">
+<div class="barHeader">
+<span>${label}</span>
+<span>${value.toFixed(1)}%</span>
+</div>
+<div class="barWrap">
+<div class="bar" style="width:${Math.min(value,100)}%"></div>
+</div>
+</div>
+`).join("");
+
+}
+
+function generateTips(){
+
+const tips=[];
+const total=totalAllocation();
+const div=diversificationScore();
+const risk=weightedRisk();
+
+const types=sumBy("type");
+const regions=sumBy("region");
+const sectors=sumBy("sector");
+
+if(total<95){
+tips.push({
+title:"Unterinvestiertes Portfolio",
+text:`Deine Allocation liegt bei ${total.toFixed(1)}%. Es sind noch ${(100-total).toFixed(1)}% nicht zugewiesen.`
+});
+}
+
+if(total>105){
+tips.push({
+title:"Allocation über 100%",
+text:`Deine Allocation liegt bei ${total.toFixed(1)}%. Reduziere Positionen um ${(total-100).toFixed(1)}%.`
+});
+}
+
+if(div>=80){
+tips.push({
+title:"Starke Diversifikation",
+text:"Dein Portfolio ist gut über Asset Types, Regionen und Sektoren verteilt."
+});
+}
+
+if(div<50&&assets.length>0){
+tips.push({
+title:"Diversifikation verbessern",
+text:"Mehr unterschiedliche Asset Types, Regionen und Sektoren könnten dein Konzentrationsrisiko reduzieren."
+});
+}
+
+Object.entries(types).forEach(([name,value])=>{
+if(value>50){
+tips.push({
+title:`Hohe ${name}-Konzentration`,
+text:`${value.toFixed(1)}% deines Portfolios liegen in ${name}. Prüfe, ob diese Gewichtung zu deinem Risikoprofil passt.`
+});
+}
+});
+
+Object.entries(regions).forEach(([name,value])=>{
+if(value>55){
+tips.push({
+title:`Regionale Konzentration`,
+text:`${value.toFixed(1)}% Exposure in ${name}. Eine breitere regionale Verteilung kann Schwankungen reduzieren.`
+});
+}
+});
+
+Object.entries(sectors).forEach(([name,value])=>{
+if(value>45){
+tips.push({
+title:`Sektor-Klumpenrisiko`,
+text:`${value.toFixed(1)}% liegen im Sektor ${name}. Prüfe Abhängigkeiten von einzelnen Marktzyklen.`
+});
+}
+});
+
+if(risk>=4){
+tips.push({
+title:"Hohes Risikoprofil",
+text:"Das gewichtete Risiko ist hoch. Defensive Assets wie Bonds, Cash oder breit gestreute ETFs könnten die Volatilität senken."
+});
+}
+
+if(risk>0&&risk<=2){
+tips.push({
+title:"Sehr defensives Portfolio",
+text:"Dein Portfolio ist risikoarm. Prüfe, ob die erwartete Rendite langfristig zu deinen Zielen passt."
+});
+}
+
+if(assets.length<4&&assets.length>0){
+tips.push({
+title:"Wenige Positionen",
+text:"Mit weniger als vier Assets ist dein Portfolio anfälliger für Einzelpositionen. Mehr Bausteine können Stabilität bringen."
+});
+}
+
+if(assets.length===0){
+tips.push({
+title:"Portfolio starten",
+text:"Füge dein erstes Asset hinzu, um Health Score, Risiko und Exposure sofort zu berechnen."
+});
+}
+
+if(tips.length===0){
+tips.push({
+title:"Ausgewogenes Setup",
+text:"Deine Kennzahlen wirken stabil. Prüfe regelmäßig Rebalancing, Risiko und regionale Gewichtung."
+});
+}
+
+return tips.slice(0,8);
+
+}
+
+function renderTips(){
+
+const container=document.getElementById("tips");
+const tips=generateTips();
+
+container.innerHTML=tips.map(tip=>`
+<div class="tip">
+<div class="tipTitle">${tip.title}</div>
+<div class="tipText">${tip.text}</div>
+</div>
+`).join("");
+
+}
+
+function renderStats(){
+
+const total=totalAllocation();
+const div=diversificationScore();
+const health=healthScore();
+const risk=weightedRisk();
+
+document.getElementById("totalAllocation").textContent=
+`${total.toFixed(1)}%`;
+
+document.getElementById("divScore").textContent=
+div;
+
+document.getElementById("healthScore").textContent=
+health;
+
+document.getElementById("healthFill").style.width=
+`${health}%`;
+
+document.getElementById("riskScore").innerHTML=
+risk===0?"-":riskBadge(risk);
+
+}
+
+function render(){
+
+renderStats();
+renderTable();
+
+renderBars(
+"assetMixChart",
+sumBy("type")
+);
+
+renderBars(
+"regionChart",
+sumBy("region")
+);
+
+renderBars(
+"sectorChart",
+sumBy("sector")
+);
+
+renderTips();
+
+}
+
+render();
+  </script>
+
+<div class="footerSpace"></div>
+
+</div>
+
+</body>
+</html>
