@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -9,11 +9,10 @@
 :root{
 --bg:#0b1020;
 --panel:#141c31;
---panel2:#1b2541;
 --card:#202c4d;
 --border:#2e3b63;
 --accent:#58a6ff;
---accent2:#00d4a6;
+--success:#00d4a6;
 --danger:#ff5d73;
 --warning:#ffb648;
 --text:#f2f6ff;
@@ -29,8 +28,7 @@ font-family:Inter,Segoe UI,Arial,sans-serif;
 }
 
 body{
-background:
-radial-gradient(circle at top,#1b2955,#0b1020 55%);
+background:radial-gradient(circle at top,#1b2955,#0b1020 60%);
 color:var(--text);
 padding:18px;
 }
@@ -47,24 +45,21 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-flex-wrap:wrap;
-gap:15px;
 }
 
 .logo{
-font-size:28px;
+font-size:30px;
 font-weight:800;
-letter-spacing:.5px;
 }
 
 .logo span{
-color:var(--accent2);
+color:var(--success);
 }
 
 .subtitle{
+margin-top:6px;
 color:var(--muted);
 font-size:14px;
-margin-top:6px;
 }
 
 .grid{
@@ -74,35 +69,33 @@ gap:20px;
 }
 
 .panel{
-background:rgba(20,28,49,.95);
+background:#141c31;
 border:1px solid var(--border);
 border-radius:var(--radius);
 padding:20px;
-backdrop-filter:blur(12px);
 }
 
 .panel h2{
 margin-bottom:18px;
-font-size:20px;
 }
 
 label{
 display:block;
-font-size:13px;
 margin-bottom:6px;
+font-size:13px;
 color:var(--muted);
 }
 
-input,select{
+input,
+select{
 width:100%;
 padding:12px;
-border-radius:12px;
-background:#10182d;
-border:1px solid #2b365b;
-color:white;
 margin-bottom:14px;
+background:#10182d;
+border:1px solid var(--border);
+border-radius:12px;
+color:white;
 outline:none;
-transition:.2s;
 }
 
 input:focus,
@@ -120,23 +113,13 @@ transition:.2s;
 }
 
 .primary{
-background:linear-gradient(135deg,var(--accent),#4c6fff);
-color:white;
 width:100%;
+background:linear-gradient(135deg,var(--accent),#4b6fff);
+color:white;
 }
 
 .primary:hover{
 transform:translateY(-2px);
-}
-
-.secondary{
-background:#2d3d69;
-color:white;
-}
-
-.danger{
-background:var(--danger);
-color:white;
 }
 
 .stats{
@@ -147,7 +130,7 @@ margin-bottom:18px;
 }
 
 .card{
-background:linear-gradient(180deg,#202d4c,#19243d);
+background:#202c4d;
 border:1px solid var(--border);
 border-radius:16px;
 padding:16px;
@@ -165,6 +148,21 @@ font-size:30px;
 font-weight:800;
 }
 
+.health{
+margin-top:10px;
+height:16px;
+background:#0d1528;
+border-radius:999px;
+overflow:hidden;
+}
+
+.healthFill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff5d73,#ffb648,#00d4a6);
+transition:.4s;
+}
+
 .assetsTable{
 overflow:auto;
 border-radius:16px;
@@ -174,13 +172,14 @@ border:1px solid var(--border);
 table{
 width:100%;
 border-collapse:collapse;
-min-width:850px;
+min-width:860px;
 }
 
-th,td{
+th,
+td{
 padding:12px;
 text-align:left;
-border-bottom:1px solid rgba(255,255,255,.06);
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 th{
@@ -188,22 +187,17 @@ background:#17213c;
 font-size:13px;
 }
 
-td{
-font-size:14px;
-}
-
 .removeBtn{
-padding:8px 10px;
-border-radius:8px;
 background:var(--danger);
 color:white;
-border:none;
-cursor:pointer;
+padding:8px 12px;
+border-radius:8px;
 }
 
 .sectionTitle{
-font-size:19px;
-margin:18px 0 14px;
+margin:20px 0 15px;
+font-size:20px;
+font-weight:700;
 }
 
 .chartGrid{
@@ -220,7 +214,7 @@ border-radius:16px;
 }
 
 .chartCard h4{
-margin-bottom:16px;
+margin-bottom:14px;
 }
 
 .barItem{
@@ -236,7 +230,7 @@ font-size:13px;
 
 .barWrap{
 height:12px;
-background:#10182b;
+background:#0f182c;
 border-radius:999px;
 overflow:hidden;
 }
@@ -244,8 +238,7 @@ overflow:hidden;
 .bar{
 height:100%;
 width:0%;
-border-radius:999px;
-background:linear-gradient(90deg,var(--accent2),var(--accent));
+background:linear-gradient(90deg,var(--success),var(--accent));
 transition:.4s;
 }
 
@@ -258,9 +251,9 @@ margin-top:18px;
 
 .tip{
 background:#19233f;
-border-left:5px solid var(--accent2);
-padding:16px;
+border-left:5px solid var(--success);
 border-radius:14px;
+padding:16px;
 }
 
 .tipTitle{
@@ -269,62 +262,24 @@ margin-bottom:8px;
 }
 
 .tipText{
-color:var(--muted);
-line-height:1.5;
 font-size:14px;
-}
-
-.health{
-height:16px;
-border-radius:999px;
-background:#111a2d;
-overflow:hidden;
-margin-top:12px;
-}
-
-.healthFill{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#ff4b68,#ffc247,#2de28b);
-transition:.5s;
-}
-
-.footerSpace{
-height:10px;
+line-height:1.5;
+color:var(--muted);
 }
 
 @media(max-width:980px){
 .grid{
 grid-template-columns:1fr;
 }
-
-.stats{
-grid-template-columns:repeat(2,1fr);
 }
 
-.big{
-font-size:24px;
-}
-}
-
-@media(max-width:640px){
-
+@media(max-width:650px){
 .stats{
 grid-template-columns:1fr;
 }
-
 .logo{
-font-size:22px;
+font-size:24px;
 }
-
-body{
-padding:12px;
-}
-
-.panel{
-padding:16px;
-}
-
 }
 </style>
 </head>
@@ -334,24 +289,20 @@ padding:16px;
 <div class="container">
 
 <header>
-
 <div>
 <div class="logo">Bond<span>Stats</span></div>
-<div class="subtitle">
-Portfolio Risk Check
+<div class="subtitle">Portfolio Risk Check</div>
 </div>
-</div>
-
 </header>
 
 <div class="grid">
 
 <div class="panel">
 
-<h2>Asset hinzufügen</h2>
+<h2>Add Asset</h2>
 
 <label>Asset Name</label>
-<input id="assetName" placeholder="z.B. Apple">
+<input id="assetName" placeholder="e.g. Apple Inc.">
 
 <label>Asset Type</label>
 <select id="assetType">
@@ -364,7 +315,7 @@ Portfolio Risk Check
 <option>Real Estate</option>
 </select>
 
-<label>Allocation %</label>
+<label>Allocation (%)</label>
 <input id="allocation" type="number" min="0" max="100" placeholder="20">
 
 <label>Region</label>
@@ -401,7 +352,7 @@ Portfolio Risk Check
 </select>
 
 <button class="primary" onclick="addAsset()">
-Asset hinzufügen
+Add Asset
 </button>
 
 </div>
@@ -424,7 +375,7 @@ Asset hinzufügen
 </div>
 
 <div class="card">
-<h3>Risk Level</h3>
+<h3>Overall Risk</h3>
 <div class="big" id="riskScore">-</div>
 </div>
 
@@ -440,22 +391,18 @@ Asset hinzufügen
 <table>
 
 <thead>
-
 <tr>
-<th>Name</th>
+<th>Asset</th>
 <th>Type</th>
 <th>Allocation</th>
 <th>Region</th>
 <th>Sector</th>
 <th>Risk</th>
-<th></th>
+<th>Action</th>
 </tr>
-
 </thead>
 
-<tbody id="assetTableBody">
-
-</tbody>
+<tbody id="assetTableBody"></tbody>
 
 </table>
 
@@ -468,27 +415,18 @@ Portfolio Analytics
 <div class="chartGrid">
 
 <div class="chartCard">
-
 <h4>Asset Mix</h4>
-
 <div id="assetMixChart"></div>
-
 </div>
 
 <div class="chartCard">
-
 <h4>Region Exposure</h4>
-
 <div id="regionChart"></div>
-
 </div>
 
 <div class="chartCard">
-
 <h4>Sector Exposure</h4>
-
 <div id="sectorChart"></div>
-
 </div>
 
 </div>
@@ -497,10 +435,7 @@ Portfolio Analytics
 Portfolio Intelligence
 </div>
 
-<div
-class="intelligence"
-id="tips">
-</div>
+<div class="intelligence" id="tips"></div>
 
 </div>
 
@@ -511,10 +446,7 @@ id="tips">
 let assets=JSON.parse(localStorage.getItem("bondstats_assets"))||[];
 
 function saveData(){
-localStorage.setItem(
-"bondstats_assets",
-JSON.stringify(assets)
-);
+localStorage.setItem("bondstats_assets",JSON.stringify(assets));
 }
   function addAsset(){
 
@@ -525,8 +457,8 @@ const region=document.getElementById("region").value;
 const sector=document.getElementById("sector").value;
 const risk=parseInt(document.getElementById("risk").value);
 
-if(!name||isNaN(allocation)||allocation<=0){
-alert("Bitte Asset Name und gültige Allocation eingeben.");
+if(!name || isNaN(allocation) || allocation<=0){
+alert("Please enter an asset name and a valid allocation.");
 return;
 }
 
@@ -547,39 +479,44 @@ render();
 }
 
 function clearForm(){
+
 document.getElementById("assetName").value="";
 document.getElementById("allocation").value="";
 document.getElementById("assetType").selectedIndex=0;
 document.getElementById("region").selectedIndex=0;
 document.getElementById("sector").selectedIndex=0;
 document.getElementById("risk").selectedIndex=2;
+
 }
 
 function deleteAsset(id){
-assets=assets.filter(asset=>asset.id!==id);
+
+assets=assets.filter(a=>a.id!==id);
+
 saveData();
 render();
-}
-
-function riskText(value){
-
-if(value<=1.5)return"Very Low";
-if(value<=2.5)return"Low";
-if(value<=3.5)return"Medium";
-if(value<=4.5)return"High";
-return"Very High";
 
 }
 
-function riskBadge(value){
+function riskLabel(v){
 
-const label=riskText(value);
+if(v<=1.5) return "Very Low";
+if(v<=2.5) return "Low";
+if(v<=3.5) return "Medium";
+if(v<=4.5) return "High";
+return "Very High";
 
-if(value<=2){
-return `<span style="color:#2de28b;font-weight:700">${label}</span>`;
 }
 
-if(value<=3.5){
+function riskBadge(v){
+
+const label=riskLabel(v);
+
+if(v<=2){
+return `<span style="color:#00d4a6;font-weight:700">${label}</span>`;
+}
+
+if(v<=3.5){
 return `<span style="color:#ffb648;font-weight:700">${label}</span>`;
 }
 
@@ -587,22 +524,9 @@ return `<span style="color:#ff5d73;font-weight:700">${label}</span>`;
 
 }
 
-function sumBy(key){
-
-const result={};
-
-assets.forEach(asset=>{
-if(!result[asset[key]])result[asset[key]]=0;
-result[asset[key]]+=asset.allocation;
-});
-
-return result;
-
-}
-
 function totalAllocation(){
 
-return assets.reduce((sum,asset)=>sum+asset.allocation,0);
+return assets.reduce((sum,a)=>sum+a.allocation,0);
 
 }
 
@@ -610,112 +534,167 @@ function weightedRisk(){
 
 const total=totalAllocation();
 
-if(total===0)return 0;
+if(total===0) return 0;
 
 return assets.reduce(
-(sum,asset)=>sum+(asset.risk*asset.allocation),
+(sum,a)=>sum+(a.risk*a.allocation),
 0
 )/total;
 
 }
 
-function diversificationScore(){
+function sumBy(key){
 
-if(assets.length===0)return 0;
+const obj={};
 
-const typeCount=Object.keys(sumBy("type")).length;
-const regionCount=Object.keys(sumBy("region")).length;
-const sectorCount=Object.keys(sumBy("sector")).length;
+assets.forEach(asset=>{
 
-let concentrationPenalty=0;
+if(!obj[asset[key]]) obj[asset[key]]=0;
 
-["type","region","sector"].forEach(key=>{
-const groups=sumBy(key);
-Object.values(groups).forEach(value=>{
-if(value>45)concentrationPenalty+=8;
-if(value>60)concentrationPenalty+=12;
-});
+obj[asset[key]]+=asset.allocation;
+
 });
 
-let base=
-(typeCount*18)+
-(regionCount*14)+
-(sectorCount*12)+
-Math.min(assets.length*5,20);
-
-let score=base-concentrationPenalty;
-
-return Math.max(0,Math.min(100,Math.round(score)));
+return obj;
 
 }
 
-function healthScore(){
+function diversificationScore(){
 
-const total=totalAllocation();
-const div=diversificationScore();
+if(assets.length===0) return 0;
+
+const types=Object.keys(sumBy("type")).length;
+const regions=Object.keys(sumBy("region")).length;
+const sectors=Object.keys(sumBy("sector")).length;
+
+let score=
+(types*18)+
+(regions*14)+
+(sectors*12)+
+Math.min(assets.length*5,20);
+
+["type","region","sector"].forEach(group=>{
+
+const values=sumBy(group);
+
+Object.values(values).forEach(v=>{
+
+if(v>45) score-=8;
+if(v>60) score-=12;
+
+});
+
+});
+
+score=Math.max(0,Math.min(100,Math.round(score)));
+
+return score;
+
+}
+
+function portfolioHealth(){
+
+const allocation=totalAllocation();
+
+const diversification=diversificationScore();
+
 const risk=weightedRisk();
 
-let allocationScore=100-Math.abs(100-total)*1.6;
-allocationScore=Math.max(0,Math.min(100,allocationScore));
+let allocationScore=
+100-Math.abs(100-allocation)*1.6;
+
+allocationScore=
+Math.max(0,Math.min(100,allocationScore));
 
 let riskScore=100;
 
-if(risk>3.2)riskScore-=((risk-3.2)*22);
-if(risk<1.8)riskScore-=((1.8-risk)*12);
+if(risk>3.2){
+riskScore-=((risk-3.2)*22);
+}
 
-let score=
-allocationScore*.35+
-div*.45+
-riskScore*.20;
+if(risk<1.8){
+riskScore-=((1.8-risk)*12);
+}
 
-return Math.max(0,Math.min(100,Math.round(score)));
+let health=
+allocationScore*0.35+
+diversification*0.45+
+riskScore*0.20;
+
+health=Math.round(
+Math.max(0,Math.min(100,health))
+);
+
+return health;
 
 }
 
-function renderTable(){
+function escapeHTML(text){
 
-const body=document.getElementById("assetTableBody");
+return text.replace(/[&<>"']/g,function(c){
 
-if(assets.length===0){
-body.innerHTML=`
-<tr>
-<td colspan="7" style="text-align:center;color:#9fb0d3;padding:24px">
-Noch keine Assets hinzugefügt.
-</td>
-</tr>
-`;
-return;
-}
-
-body.innerHTML=assets.map(asset=>`
-<tr>
-<td><strong>${escapeHTML(asset.name)}</strong></td>
-<td>${asset.type}</td>
-<td>${asset.allocation.toFixed(1)}%</td>
-<td>${asset.region}</td>
-<td>${asset.sector}</td>
-<td>${riskBadge(asset.risk)}</td>
-<td>
-<button class="removeBtn" onclick="deleteAsset(${asset.id})">
-Löschen
-</button>
-</td>
-</tr>
-`).join("");
-
-}
-
-function escapeHTML(str){
-
-return str.replace(/[&<>"']/g,function(match){
 return{
 "&":"&amp;",
 "<":"&lt;",
 ">":"&gt;",
 '"':"&quot;",
 "'":"&#039;"
-}[match];
+}[c];
+
 });
+
+}
+
+function renderTable(){
+
+const tbody=document.getElementById("assetTableBody");
+
+if(assets.length===0){
+
+tbody.innerHTML=`
+<tr>
+<td colspan="7"
+style="text-align:center;padding:24px;color:#9fb0d3">
+No assets added yet.
+</td>
+</tr>
+`;
+
+return;
+
+}
+
+tbody.innerHTML=assets.map(asset=>`
+
+<tr>
+
+<td><strong>${escapeHTML(asset.name)}</strong></td>
+
+<td>${asset.type}</td>
+
+<td>${asset.allocation.toFixed(1)}%</td>
+
+<td>${asset.region}</td>
+
+<td>${asset.sector}</td>
+
+<td>${riskBadge(asset.risk)}</td>
+
+<td>
+
+<button
+class="removeBtn"
+onclick="deleteAsset(${asset.id})">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
 
 }
   function renderBars(targetId,data){
@@ -724,7 +703,7 @@ const target=document.getElementById(targetId);
 const entries=Object.entries(data).sort((a,b)=>b[1]-a[1]);
 
 if(entries.length===0){
-target.innerHTML=`<div style="color:#9fb0d3;font-size:14px">Keine Daten vorhanden.</div>`;
+target.innerHTML=`<div style="color:#9fb0d3;font-size:14px">No data available.</div>`;
 return;
 }
 
@@ -753,39 +732,47 @@ const types=sumBy("type");
 const regions=sumBy("region");
 const sectors=sumBy("sector");
 
+if(assets.length===0){
+tips.push({
+title:"Start Your Portfolio",
+text:"Add your first asset to calculate health, diversification, risk and exposure metrics."
+});
+return tips;
+}
+
 if(total<95){
 tips.push({
-title:"Unterinvestiertes Portfolio",
-text:`Deine Allocation liegt bei ${total.toFixed(1)}%. Es sind noch ${(100-total).toFixed(1)}% nicht zugewiesen.`
+title:"Portfolio Is Underallocated",
+text:`Your total allocation is ${total.toFixed(1)}%. You still have ${(100-total).toFixed(1)}% unassigned capital.`
 });
 }
 
 if(total>105){
 tips.push({
-title:"Allocation über 100%",
-text:`Deine Allocation liegt bei ${total.toFixed(1)}%. Reduziere Positionen um ${(total-100).toFixed(1)}%.`
+title:"Portfolio Is Overallocated",
+text:`Your total allocation is ${total.toFixed(1)}%. Reduce positions by ${(total-100).toFixed(1)}% to get closer to 100%.`
 });
 }
 
 if(div>=80){
 tips.push({
-title:"Starke Diversifikation",
-text:"Dein Portfolio ist gut über Asset Types, Regionen und Sektoren verteilt."
+title:"Strong Diversification",
+text:"Your portfolio is well spread across asset types, regions and sectors."
 });
 }
 
-if(div<50&&assets.length>0){
+if(div<50){
 tips.push({
-title:"Diversifikation verbessern",
-text:"Mehr unterschiedliche Asset Types, Regionen und Sektoren könnten dein Konzentrationsrisiko reduzieren."
+title:"Improve Diversification",
+text:"Add more asset types, regions or sectors to reduce concentration risk."
 });
 }
 
 Object.entries(types).forEach(([name,value])=>{
 if(value>50){
 tips.push({
-title:`Hohe ${name}-Konzentration`,
-text:`${value.toFixed(1)}% deines Portfolios liegen in ${name}. Prüfe, ob diese Gewichtung zu deinem Risikoprofil passt.`
+title:`High ${name} Concentration`,
+text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Check whether this matches your risk tolerance.`
 });
 }
 });
@@ -793,8 +780,8 @@ text:`${value.toFixed(1)}% deines Portfolios liegen in ${name}. Prüfe, ob diese
 Object.entries(regions).forEach(([name,value])=>{
 if(value>55){
 tips.push({
-title:`Regionale Konzentration`,
-text:`${value.toFixed(1)}% Exposure in ${name}. Eine breitere regionale Verteilung kann Schwankungen reduzieren.`
+title:"Regional Concentration Risk",
+text:`${value.toFixed(1)}% of your portfolio is exposed to ${name}. Broader regional exposure may reduce volatility.`
 });
 }
 });
@@ -802,44 +789,37 @@ text:`${value.toFixed(1)}% Exposure in ${name}. Eine breitere regionale Verteilu
 Object.entries(sectors).forEach(([name,value])=>{
 if(value>45){
 tips.push({
-title:`Sektor-Klumpenrisiko`,
-text:`${value.toFixed(1)}% liegen im Sektor ${name}. Prüfe Abhängigkeiten von einzelnen Marktzyklen.`
+title:"Sector Concentration Risk",
+text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Review dependence on a single market cycle.`
 });
 }
 });
 
 if(risk>=4){
 tips.push({
-title:"Hohes Risikoprofil",
-text:"Das gewichtete Risiko ist hoch. Defensive Assets wie Bonds, Cash oder breit gestreute ETFs könnten die Volatilität senken."
+title:"High Risk Profile",
+text:"Your weighted portfolio risk is high. Bonds, cash or broad ETFs may help reduce volatility."
 });
 }
 
-if(risk>0&&risk<=2){
+if(risk>0 && risk<=2){
 tips.push({
-title:"Sehr defensives Portfolio",
-text:"Dein Portfolio ist risikoarm. Prüfe, ob die erwartete Rendite langfristig zu deinen Zielen passt."
+title:"Defensive Risk Profile",
+text:"Your portfolio is very defensive. Check whether the expected return still fits your long-term goals."
 });
 }
 
-if(assets.length<4&&assets.length>0){
+if(assets.length<4){
 tips.push({
-title:"Wenige Positionen",
-text:"Mit weniger als vier Assets ist dein Portfolio anfälliger für Einzelpositionen. Mehr Bausteine können Stabilität bringen."
-});
-}
-
-if(assets.length===0){
-tips.push({
-title:"Portfolio starten",
-text:"Füge dein erstes Asset hinzu, um Health Score, Risiko und Exposure sofort zu berechnen."
+title:"Limited Number Of Holdings",
+text:"With fewer than four assets, your portfolio may be sensitive to single-position movements."
 });
 }
 
 if(tips.length===0){
 tips.push({
-title:"Ausgewogenes Setup",
-text:"Deine Kennzahlen wirken stabil. Prüfe regelmäßig Rebalancing, Risiko und regionale Gewichtung."
+title:"Balanced Setup",
+text:"Your portfolio metrics look stable. Continue reviewing allocation, risk and exposure regularly."
 });
 }
 
@@ -849,10 +829,10 @@ return tips.slice(0,8);
 
 function renderTips(){
 
-const container=document.getElementById("tips");
+const box=document.getElementById("tips");
 const tips=generateTips();
 
-container.innerHTML=tips.map(tip=>`
+box.innerHTML=tips.map(tip=>`
 <div class="tip">
 <div class="tipTitle">${tip.title}</div>
 <div class="tipText">${tip.text}</div>
@@ -865,7 +845,7 @@ function renderStats(){
 
 const total=totalAllocation();
 const div=diversificationScore();
-const health=healthScore();
+const health=portfolioHealth();
 const risk=weightedRisk();
 
 document.getElementById("totalAllocation").textContent=
@@ -881,11 +861,10 @@ document.getElementById("healthFill").style.width=
 `${health}%`;
 
 document.getElementById("riskScore").innerHTML=
-risk===0?"-":riskBadge(risk);
+risk===0 ? "-" : riskBadge(risk);
 
 }
-
-function render(){
+  function render(){
 
 renderStats();
 renderTable();
@@ -910,9 +889,8 @@ renderTips();
 }
 
 render();
-  </script>
 
-<div class="footerSpace"></div>
+</script>
 
 </div>
 
