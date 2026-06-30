@@ -7,18 +7,22 @@
 
 <style>
 :root{
---bg:#071021;
---panel:#111b33;
---card:#16254a;
---card2:#10203f;
---border:#2a4275;
---accent:#35b7ff;
---success:#00e0b0;
---danger:#ff5d73;
---warning:#ffbd4a;
---text:#f4f8ff;
---muted:#a7b8db;
---radius:16px;
+--bg:#020806;
+--bg2:#06140f;
+--panel:rgba(9,28,21,.82);
+--panel2:rgba(13,42,31,.92);
+--glass:rgba(255,255,255,.045);
+--line:rgba(60,255,180,.24);
+--line2:rgba(60,255,180,.42);
+--green:#00ff9c;
+--green2:#44ffd2;
+--green3:#00c875;
+--danger:#ff4d6d;
+--warning:#ffcf5a;
+--text:#effff8;
+--muted:#89b6a4;
+--shadow:0 24px 90px rgba(0,255,156,.08);
+--radius:24px;
 }
 
 *{
@@ -34,221 +38,459 @@ overflow-x:hidden;
 }
 
 body{
-font-family:Inter,Segoe UI,Arial,sans-serif;
-background:linear-gradient(135deg,#081426,#0b1f4a 55%,#081426);
+font-family:Inter,Segoe UI,system-ui,Arial,sans-serif;
+background:
+radial-gradient(circle at 20% -10%,rgba(0,255,156,.28),transparent 34%),
+radial-gradient(circle at 90% 0%,rgba(68,255,210,.16),transparent 30%),
+linear-gradient(160deg,#020806,#06140f 45%,#020806);
 color:var(--text);
-padding:14px;
+padding:16px;
 }
 
-.container{
+body:before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+background-size:42px 42px;
+mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 80%);
+}
+
+.shell{
 width:100%;
-max-width:1180px;
+max-width:1220px;
 margin:0 auto;
+position:relative;
+z-index:1;
 }
 
-header{
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
 margin-bottom:18px;
+padding:18px;
+border:1px solid var(--line);
+border-radius:28px;
+background:linear-gradient(135deg,rgba(10,35,26,.88),rgba(3,14,10,.84));
+box-shadow:var(--shadow);
+backdrop-filter:blur(18px);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+min-width:0;
+}
+
+.mark{
+width:46px;
+height:46px;
+border-radius:16px;
+background:
+linear-gradient(135deg,var(--green),var(--green2));
+box-shadow:0 0 32px rgba(0,255,156,.45);
+position:relative;
+flex:0 0 auto;
+}
+
+.mark:after{
+content:"";
+position:absolute;
+inset:12px;
+border-radius:9px;
+background:#02100b;
+}
+
+.brandText{
+min-width:0;
 }
 
 .logo{
-font-size:clamp(24px,5vw,34px);
-font-weight:900;
-letter-spacing:-1px;
+font-size:clamp(24px,5vw,36px);
+font-weight:950;
+letter-spacing:-1.4px;
+line-height:1;
 }
 
 .logo span{
-color:var(--success);
+color:var(--green);
+text-shadow:0 0 22px rgba(0,255,156,.55);
 }
 
 .subtitle{
+margin-top:6px;
 color:var(--muted);
-font-size:14px;
-margin-top:4px;
+font-size:13px;
+letter-spacing:.18em;
+text-transform:uppercase;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.statusPill{
+border:1px solid var(--line2);
+background:rgba(0,255,156,.08);
+color:var(--green2);
+border-radius:999px;
+padding:10px 14px;
+font-size:12px;
+font-weight:800;
+letter-spacing:.12em;
+text-transform:uppercase;
+white-space:nowrap;
 }
 
 .app{
 display:grid;
-grid-template-columns:minmax(260px,340px) minmax(0,1fr);
+grid-template-columns:minmax(280px,360px) minmax(0,1fr);
 gap:18px;
 align-items:start;
 }
 
 .panel,
-.card,
+.metric,
+.tableCard,
 .chartCard,
-.tip,
-.assetsBox{
-background:linear-gradient(180deg,rgba(31,58,120,.88),rgba(10,25,56,.92));
-border:1px solid var(--border);
-border-radius:var(--radius);
-box-shadow:0 20px 60px rgba(0,0,0,.22);
+.tip{
+border:1px solid var(--line);
+background:
+linear-gradient(180deg,rgba(12,41,30,.9),rgba(3,15,11,.88));
+box-shadow:var(--shadow);
+backdrop-filter:blur(18px);
+position:relative;
+overflow:hidden;
+}
+
+.panel:before,
+.metric:before,
+.tableCard:before,
+.chartCard:before,
+.tip:before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,transparent,rgba(0,255,156,.08),transparent);
+transform:translateX(-100%);
+animation:sweep 7s infinite;
+pointer-events:none;
+}
+
+@keyframes sweep{
+0%,72%{transform:translateX(-100%)}
+100%{transform:translateX(100%)}
 }
 
 .panel{
+border-radius:var(--radius);
 padding:18px;
 position:sticky;
-top:14px;
+top:16px;
+}
+
+.panelHead{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-bottom:18px;
 }
 
 .panel h2{
-font-size:24px;
-margin-bottom:16px;
+font-size:22px;
+font-weight:950;
+letter-spacing:-.5px;
 }
 
-label{
-display:block;
-color:var(--text);
-font-size:13px;
-font-weight:700;
-margin:12px 0 6px;
+.micro{
+font-size:11px;
+font-weight:900;
+color:var(--green2);
+border:1px solid var(--line);
+padding:7px 9px;
+border-radius:999px;
+background:rgba(0,255,156,.06);
+}
+
+.formGrid{
+display:grid;
+grid-template-columns:1fr;
+gap:12px;
+}
+
+.field label{
+display:flex;
+align-items:center;
+justify-content:space-between;
+font-size:12px;
+font-weight:850;
+color:var(--muted);
+margin-bottom:7px;
+letter-spacing:.04em;
+text-transform:uppercase;
 }
 
 input,
 select{
 width:100%;
-height:42px;
-background:#091a36;
-border:1px solid #3d68ad;
-border-radius:12px;
-color:white;
-padding:0 12px;
+height:46px;
+border:1px solid rgba(75,255,190,.26);
+border-radius:16px;
+background:rgba(1,11,8,.82);
+color:var(--text);
+padding:0 14px;
 font-size:14px;
 outline:none;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
 }
 
 input:focus,
 select:focus{
-border-color:var(--accent);
-box-shadow:0 0 0 3px rgba(53,183,255,.18);
+border-color:var(--green);
+box-shadow:0 0 0 4px rgba(0,255,156,.12),0 0 24px rgba(0,255,156,.14);
 }
 
-button{
-border:0;
-cursor:pointer;
-border-radius:12px;
-font-weight:800;
-transition:.2s;
+select{
+appearance:none;
+background-image:
+linear-gradient(45deg,transparent 50%,var(--green) 50%),
+linear-gradient(135deg,var(--green) 50%,transparent 50%);
+background-position:
+calc(100% - 18px) 19px,
+calc(100% - 13px) 19px;
+background-size:5px 5px;
+background-repeat:no-repeat;
 }
 
 .primary{
 width:100%;
-height:44px;
+height:50px;
 margin-top:16px;
-background:linear-gradient(135deg,#22c6ff,#2187ff);
-color:white;
+border:0;
+border-radius:18px;
+cursor:pointer;
+font-weight:950;
+letter-spacing:.04em;
+text-transform:uppercase;
+color:#00120b;
+background:linear-gradient(135deg,var(--green),var(--green2));
+box-shadow:0 0 32px rgba(0,255,156,.32);
+transition:.2s;
 }
 
-.main{
+.primary:hover{
+transform:translateY(-2px);
+box-shadow:0 0 44px rgba(0,255,156,.44);
+}
+  .main{
+display:flex;
+flex-direction:column;
+gap:18px;
 min-width:0;
 }
 
-.stats{
+.metrics{
 display:grid;
 grid-template-columns:repeat(4,minmax(0,1fr));
-gap:14px;
-margin-bottom:16px;
+gap:16px;
 }
 
-.card{
-padding:16px;
-min-width:0;
+.metric{
+border-radius:24px;
+padding:18px;
+min-height:138px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
 }
 
-.card h3{
-font-size:13px;
-line-height:1.2;
-color:var(--text);
-margin-bottom:12px;
+.metricTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
 }
 
-.big{
-font-size:clamp(26px,4vw,34px);
-font-weight:900;
+.metricTitle{
+font-size:12px;
+font-weight:800;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--muted);
+}
+
+.metricIcon{
+width:44px;
+height:44px;
+border-radius:14px;
+display:grid;
+place-items:center;
+background:rgba(0,255,156,.09);
+border:1px solid var(--line2);
+font-size:18px;
+}
+
+.metricValue{
+font-size:clamp(28px,4vw,40px);
+font-weight:950;
+letter-spacing:-1px;
 line-height:1;
-word-break:break-word;
+margin-top:8px;
 }
 
-.health{
-height:16px;
-background:#08152b;
+.progress{
+margin-top:14px;
+height:10px;
+background:rgba(255,255,255,.05);
 border-radius:999px;
 overflow:hidden;
-margin-top:12px;
 }
 
-.healthFill{
-height:100%;
+.progressFill{
 width:0%;
-background:linear-gradient(90deg,#ff5d73,#ffbd4a,#00e0b0);
-transition:.4s;
+height:100%;
+background:linear-gradient(90deg,var(--green3),var(--green2));
+box-shadow:0 0 18px rgba(0,255,156,.45);
+transition:.35s;
 }
 
-.assetsBox{
+.tableCard{
+border-radius:24px;
 overflow:hidden;
-margin-bottom:18px;
+}
+
+.tableHeader{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 20px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.tableTitle{
+font-size:20px;
+font-weight:900;
+}
+
+.tableSubtitle{
+font-size:13px;
+color:var(--muted);
+margin-top:4px;
 }
 
 .tableScroll{
-width:100%;
 overflow-x:auto;
 -webkit-overflow-scrolling:touch;
 }
 
 table{
 width:100%;
+min-width:760px;
 border-collapse:collapse;
-min-width:720px;
 }
 
-th,td{
-padding:12px;
-text-align:left;
-border-bottom:1px solid rgba(255,255,255,.08);
-font-size:14px;
+thead{
+background:rgba(0,255,156,.06);
 }
 
 th{
-background:rgba(52,104,203,.35);
-font-size:13px;
+padding:16px;
+font-size:12px;
+font-weight:900;
+text-transform:uppercase;
+letter-spacing:.08em;
+text-align:left;
+color:var(--green2);
+}
+
+td{
+padding:15px 16px;
+border-top:1px solid rgba(255,255,255,.04);
+font-size:14px;
+}
+
+tbody tr{
+transition:.2s;
+}
+
+tbody tr:hover{
+background:rgba(255,255,255,.03);
 }
 
 .removeBtn{
-background:var(--danger);
+padding:9px 14px;
+border:none;
+border-radius:12px;
+background:rgba(255,77,109,.12);
+color:#ff8ea2;
+font-weight:800;
+cursor:pointer;
+transition:.2s;
+}
+
+.removeBtn:hover{
+background:#ff4d6d;
 color:white;
-padding:8px 10px;
-border-radius:10px;
 }
 
 .sectionTitle{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:6px 0 4px;
+}
+
+.sectionTitle h2{
 font-size:22px;
+font-weight:950;
+letter-spacing:-.5px;
+}
+
+.sectionBadge{
+padding:8px 12px;
+border-radius:999px;
+border:1px solid var(--line);
+background:rgba(0,255,156,.06);
+font-size:11px;
 font-weight:900;
-margin:18px 0 12px;
-}.chartGrid{
+color:var(--green2);
+text-transform:uppercase;
+}
+
+.analytics{
 display:grid;
 grid-template-columns:repeat(3,minmax(0,1fr));
-gap:14px;
+gap:16px;
 }
 
 .chartCard{
-padding:16px;
-min-width:0;
+border-radius:24px;
+padding:18px;
 }
 
-.chartCard h4{
-font-size:16px;
-margin-bottom:14px;
+.chartTitle{
+font-size:17px;
+font-weight:900;
+margin-bottom:18px;
 }
 
 .barItem{
-margin-bottom:13px;
+margin-bottom:16px;
 }
 
 .barHeader{
 display:flex;
 justify-content:space-between;
+align-items:center;
 gap:10px;
 font-size:13px;
-margin-bottom:6px;
+margin-bottom:7px;
 }
 
 .barHeader span:first-child{
@@ -257,147 +499,182 @@ text-overflow:ellipsis;
 white-space:nowrap;
 }
 
-.barWrap{
+.barTrack{
 height:12px;
-background:#08152b;
 border-radius:999px;
+background:rgba(255,255,255,.05);
 overflow:hidden;
 }
 
 .bar{
-height:100%;
 width:0%;
-background:linear-gradient(90deg,var(--success),var(--accent));
+height:100%;
 border-radius:999px;
+background:linear-gradient(90deg,#00c875,#00ff9c,#44ffd2);
+box-shadow:0 0 18px rgba(0,255,156,.45);
 transition:.4s;
 }
 
 .intelligence{
 display:grid;
 grid-template-columns:repeat(2,minmax(0,1fr));
-gap:14px;
+gap:16px;
 }
 
 .tip{
-padding:16px;
-border-left:5px solid var(--success);
+border-radius:22px;
+padding:20px;
 }
 
 .tipTitle{
+font-size:18px;
 font-weight:900;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .tipText{
 font-size:14px;
-line-height:1.45;
+line-height:1.65;
 color:var(--muted);
 }
 
-@media(max-width:1050px){
-.container{
-max-width:920px;
-}
+@media(max-width:1100px){
+
 .app{
 grid-template-columns:1fr;
 }
+
 .panel{
 position:relative;
 top:auto;
 }
+
 .formGrid{
-display:grid;
 grid-template-columns:repeat(2,minmax(0,1fr));
-gap:0 14px;
+gap:14px;
 }
-.stats{
+
+.metrics{
 grid-template-columns:repeat(2,minmax(0,1fr));
 }
-.chartGrid{
+
+.analytics{
 grid-template-columns:1fr;
 }
+
 .intelligence{
 grid-template-columns:1fr;
 }
+
 }
 
-@media(max-width:620px){
+@media(max-width:680px){
+
 body{
 padding:10px;
 }
-.panel{
+
+.topbar{
 padding:14px;
 }
+
 .formGrid{
 grid-template-columns:1fr;
 }
-.stats{
+
+.metrics{
 grid-template-columns:1fr;
-gap:10px;
+gap:12px;
 }
-.card,
-.chartCard,
-.tip{
-padding:14px;
+
+.metric{
+min-height:118px;
 }
+
+.tableHeader{
+flex-direction:column;
+align-items:flex-start;
+gap:6px;
+}
+
 table{
 min-width:640px;
 }
-th,td{
-padding:10px;
-font-size:13px;
+
+.analytics{
+gap:12px;
 }
-.sectionTitle{
-font-size:19px;
+
+.chartCard,
+.metric,
+.panel,
+.tip{
+border-radius:20px;
 }
+
 }
 
 @media(max-width:420px){
-body{
-padding:8px;
-}
+
 .logo{
-font-size:24px;
+font-size:26px;
 }
-.subtitle{
-font-size:13px;
+
+.metricValue{
+font-size:30px;
 }
-.panel h2{
-font-size:21px;
-}
-input,
-select{
-height:40px;
-}
+
 .primary{
-height:42px;
+height:48px;
 }
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="shell">
 
-<header>
-<div class="logo">Bond<span>Stats</span></div>
-<div class="subtitle">Portfolio Risk Check</div>
-</header>
+<div class="topbar">
 
+<div class="brand">
+
+<div class="mark"></div>
+
+<div class="brandText">
+<div class="logo">
+Bond<span>Stats</span>
+</div>
+<div class="subtitle">
+Elite Portfolio Intelligence
+</div>
+</div>
+
+</div>
+
+<div class="statusPill">
+Offline • Secure • Local
+</div>
+
+</div>
 <div class="app">
 
 <aside class="panel">
+
+<div class="panelHead">
 <h2>Add Asset</h2>
+<div class="micro">Input</div>
+</div>
 
 <div class="formGrid">
 
-<div>
+<div class="field">
 <label>Asset Name</label>
 <input id="assetName" placeholder="e.g. Apple Inc.">
 </div>
 
-<div>
+<div class="field">
 <label>Asset Type</label>
 <select id="assetType">
 <option>Stock</option>
@@ -410,12 +687,12 @@ height:42px;
 </select>
 </div>
 
-<div>
-<label>Allocation (%)</label>
+<div class="field">
+<label>Allocation</label>
 <input id="allocation" type="number" min="0" max="100" placeholder="20">
 </div>
 
-<div>
+<div class="field">
 <label>Region</label>
 <select id="region">
 <option>North America</option>
@@ -428,7 +705,7 @@ height:42px;
 </select>
 </div>
 
-<div>
+<div class="field">
 <label>Sector</label>
 <select id="sector">
 <option>Technology</option>
@@ -443,7 +720,7 @@ height:42px;
 </select>
 </div>
 
-<div>
+<div class="field">
 <label>Risk Level</label>
 <select id="risk">
 <option value="1">Very Low</option>
@@ -456,38 +733,63 @@ height:42px;
 
 </div>
 
-<button class="primary" onclick="addAsset()">Add Asset</button>
+<button class="primary" onclick="addAsset()">Analyze Asset</button>
+
 </aside>
 
 <main class="main">
 
-<section class="stats">
+<section class="metrics">
 
-<div class="card">
-<h3>Portfolio Health Score</h3>
-<div class="big" id="healthScore">0</div>
-<div class="health">
-<div class="healthFill" id="healthFill"></div>
+<div class="metric">
+<div class="metricTop">
+<div class="metricTitle">Health Score</div>
+<div class="metricIcon">⬡</div>
+</div>
+<div>
+<div class="metricValue" id="healthScore">0</div>
+<div class="progress">
+<div class="progressFill" id="healthFill"></div>
 </div>
 </div>
-
-<div class="card">
-<h3>Diversification Score</h3>
-<div class="big" id="divScore">0</div>
-</div>
-<div class="card">
-<h3>Overall Risk</h3>
-<div class="big" id="riskScore">-</div>
 </div>
 
-<div class="card">
-<h3>Total Allocation</h3>
-<div class="big" id="totalAllocation">0%</div>
+<div class="metric">
+<div class="metricTop">
+<div class="metricTitle">Diversification</div>
+<div class="metricIcon">✦</div>
+</div>
+<div class="metricValue" id="divScore">0</div>
+</div>
+
+<div class="metric">
+<div class="metricTop">
+<div class="metricTitle">Risk Level</div>
+<div class="metricIcon">◈</div>
+</div>
+<div class="metricValue" id="riskScore">-</div>
+</div>
+
+<div class="metric">
+<div class="metricTop">
+<div class="metricTitle">Allocation</div>
+<div class="metricIcon">%</div>
+</div>
+<div class="metricValue" id="totalAllocation">0%</div>
 </div>
 
 </section>
 
-<section class="assetsBox">
+<section class="tableCard">
+
+<div class="tableHeader">
+<div>
+<div class="tableTitle">Portfolio Assets</div>
+<div class="tableSubtitle">Live local portfolio composition</div>
+</div>
+<div class="sectionBadge">LocalStorage</div>
+</div>
+
 <div class="tableScroll">
 <table>
 <thead>
@@ -504,30 +806,37 @@ height:42px;
 <tbody id="assetTableBody"></tbody>
 </table>
 </div>
+
 </section>
 
-<div class="sectionTitle">Portfolio Analytics</div>
+<div class="sectionTitle">
+<h2>Portfolio Analytics</h2>
+<div class="sectionBadge">HTML/CSS Bars</div>
+</div>
 
-<section class="chartGrid">
+<section class="analytics">
 
 <div class="chartCard">
-<h4>Asset Mix</h4>
+<div class="chartTitle">Asset Mix</div>
 <div id="assetMixChart"></div>
 </div>
 
 <div class="chartCard">
-<h4>Region Exposure</h4>
+<div class="chartTitle">Region Exposure</div>
 <div id="regionChart"></div>
 </div>
 
 <div class="chartCard">
-<h4>Sector Exposure</h4>
+<div class="chartTitle">Sector Exposure</div>
 <div id="sectorChart"></div>
 </div>
 
 </section>
 
-<div class="sectionTitle">Portfolio Intelligence</div>
+<div class="sectionTitle">
+<h2>Portfolio Intelligence</h2>
+<div class="sectionBadge">Signal Engine</div>
+</div>
 
 <section class="intelligence" id="tips"></section>
 
@@ -577,8 +886,7 @@ assets=assets.filter(asset=>asset.id!==id);
 saveData();
 render();
 }
-
-function escapeHTML(text){
+  function escapeHTML(text){
 return text.replace(/[&<>"']/g,function(c){
 return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];
 });
@@ -610,18 +918,21 @@ if(value<=3.5)return"Medium";
 if(value<=4.5)return"High";
 return"Very High";
 }
-  function riskBadge(value){
+
+function riskBadge(value){
 const label=riskLabel(value);
-if(value<=2)return`<span style="color:#00e0b0;font-weight:900">${label}</span>`;
-if(value<=3.5)return`<span style="color:#ffbd4a;font-weight:900">${label}</span>`;
-return`<span style="color:#ff5d73;font-weight:900">${label}</span>`;
+if(value<=2)return`<span style="color:#00ff9c;text-shadow:0 0 14px rgba(0,255,156,.6)">${label}</span>`;
+if(value<=3.5)return`<span style="color:#ffcf5a">${label}</span>`;
+return`<span style="color:#ff4d6d">${label}</span>`;
 }
 
 function diversificationScore(){
 if(assets.length===0)return 0;
+
 const types=Object.keys(sumBy("type")).length;
 const regions=Object.keys(sumBy("region")).length;
 const sectors=Object.keys(sumBy("sector")).length;
+
 let score=(types*18)+(regions*14)+(sectors*12)+Math.min(assets.length*5,20);
 
 ["type","region","sector"].forEach(key=>{
@@ -638,20 +949,36 @@ function portfolioHealth(){
 const total=totalAllocation();
 const div=diversificationScore();
 const risk=weightedRisk();
+
 let allocationScore=100-Math.abs(100-total)*1.6;
 allocationScore=Math.max(0,Math.min(100,allocationScore));
+
 let riskScore=100;
+
 if(risk>3.2)riskScore-=((risk-3.2)*22);
 if(risk<1.8)riskScore-=((1.8-risk)*12);
-return Math.max(0,Math.min(100,Math.round((allocationScore*.35)+(div*.45)+(riskScore*.20))));
+
+return Math.max(0,Math.min(100,Math.round(
+allocationScore*.35+
+div*.45+
+riskScore*.20
+)));
 }
 
 function renderTable(){
 const body=document.getElementById("assetTableBody");
+
 if(assets.length===0){
-body.innerHTML=`<tr><td colspan="7" style="text-align:center;padding:22px;color:#a7b8db">No assets added yet.</td></tr>`;
+body.innerHTML=`
+<tr>
+<td colspan="7" style="text-align:center;padding:24px;color:#89b6a4">
+No assets added yet.
+</td>
+</tr>
+`;
 return;
 }
+
 body.innerHTML=assets.map(asset=>`
 <tr>
 <td><strong>${escapeHTML(asset.name)}</strong></td>
@@ -659,7 +986,7 @@ body.innerHTML=assets.map(asset=>`
 <td>${asset.allocation.toFixed(1)}%</td>
 <td>${asset.region}</td>
 <td>${asset.sector}</td>
-<td>${riskBadge(asset.risk)}</td>
+<td style="font-weight:900">${riskBadge(asset.risk)}</td>
 <td><button class="removeBtn" onclick="deleteAsset(${asset.id})">Delete</button></td>
 </tr>
 `).join("");
@@ -668,14 +995,21 @@ body.innerHTML=assets.map(asset=>`
 function renderBars(targetId,data){
 const target=document.getElementById(targetId);
 const entries=Object.entries(data).sort((a,b)=>b[1]-a[1]);
+
 if(entries.length===0){
-target.innerHTML=`<div style="color:#a7b8db;font-size:14px">No data available.</div>`;
+target.innerHTML=`<div style="color:#89b6a4;font-size:14px">No data available.</div>`;
 return;
 }
+
 target.innerHTML=entries.map(([label,value])=>`
 <div class="barItem">
-<div class="barHeader"><span>${label}</span><span>${value.toFixed(1)}%</span></div>
-<div class="barWrap"><div class="bar" style="width:${Math.min(value,100)}%"></div></div>
+<div class="barHeader">
+<span>${label}</span>
+<span>${value.toFixed(1)}%</span>
+</div>
+<div class="barTrack">
+<div class="bar" style="width:${Math.min(value,100)}%"></div>
+</div>
 </div>
 `).join("");
 }
@@ -690,31 +1024,32 @@ const regions=sumBy("region");
 const sectors=sumBy("sector");
 
 if(assets.length===0){
-return[{title:"Start Your Portfolio",text:"Add your first asset to calculate health, diversification, risk and exposure metrics."}];
+return[{title:"Initialize Portfolio Engine",text:"Add your first asset to activate health scoring, diversification mapping, risk analysis and exposure intelligence."}];
 }
 
-if(total<95)tips.push({title:"Portfolio Is Underallocated",text:`Your total allocation is ${total.toFixed(1)}%. You still have ${(100-total).toFixed(1)}% unassigned capital.`});
-if(total>105)tips.push({title:"Portfolio Is Overallocated",text:`Your total allocation is ${total.toFixed(1)}%. Reduce positions by ${(total-100).toFixed(1)}% to get closer to 100%.`});
-if(div>=80)tips.push({title:"Strong Diversification",text:"Your portfolio is well spread across asset types, regions and sectors."});
-if(div<50)tips.push({title:"Improve Diversification",text:"Add more asset types, regions or sectors to reduce concentration risk."});
+if(total<95)tips.push({title:"Capital Deployment Gap",text:`Your portfolio is ${total.toFixed(1)}% allocated. ${(100-total).toFixed(1)}% remains unassigned and could dilute portfolio precision.`});
+if(total>105)tips.push({title:"Allocation Overload",text:`Your portfolio allocation is ${total.toFixed(1)}%. Reduce exposure by ${(total-100).toFixed(1)}% to normalize the structure.`});
+if(div>=80)tips.push({title:"High-Grade Diversification",text:"Your portfolio has strong distribution across asset classes, regions and sectors."});
+if(div<50)tips.push({title:"Diversification Weak Point",text:"Your portfolio shows concentration risk. Add more regions, sectors or asset types to improve resilience."});
 
 Object.entries(types).forEach(([name,value])=>{
-if(value>50)tips.push({title:`High ${name} Concentration`,text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Check whether this matches your risk tolerance.`});
+if(value>50)tips.push({title:`Asset Class Cluster: ${name}`,text:`${value.toFixed(1)}% is concentrated in ${name}. This can amplify volatility if the asset class weakens.`});
 });
 
 Object.entries(regions).forEach(([name,value])=>{
-if(value>55)tips.push({title:"Regional Concentration Risk",text:`${value.toFixed(1)}% of your portfolio is exposed to ${name}. Broader regional exposure may reduce volatility.`});
+if(value>55)tips.push({title:`Regional Exposure Spike`,text:`${value.toFixed(1)}% of your portfolio is exposed to ${name}. Broader geography can reduce macro dependency.`});
 });
 
 Object.entries(sectors).forEach(([name,value])=>{
-if(value>45)tips.push({title:"Sector Concentration Risk",text:`${value.toFixed(1)}% of your portfolio is allocated to ${name}. Review dependence on a single market cycle.`});
+if(value>45)tips.push({title:`Sector Signal Alert`,text:`${value.toFixed(1)}% is allocated to ${name}. Review whether this sector weight matches your long-term thesis.`});
 });
 
-if(risk>=4)tips.push({title:"High Risk Profile",text:"Your weighted portfolio risk is high. Bonds, cash or broad ETFs may help reduce volatility."});
-if(risk>0&&risk<=2)tips.push({title:"Defensive Risk Profile",text:"Your portfolio is very defensive. Check whether the expected return still fits your long-term goals."});
-if(assets.length<4)tips.push({title:"Limited Number Of Holdings",text:"With fewer than four assets, your portfolio may be sensitive to single-position movements."});
+if(risk>=4)tips.push({title:"Elevated Risk Signal",text:"Weighted risk is high. Consider bonds, cash or broad ETFs to reduce volatility."});
+if(risk>0&&risk<=2)tips.push({title:"Defensive Signal",text:"Risk is low. Confirm that your expected return still supports your long-term objectives."});
+if(assets.length<4)tips.push({title:"Low Holding Count",text:"Fewer than four holdings may increase dependency on single positions."});
 
-if(tips.length===0)tips.push({title:"Balanced Setup",text:"Your portfolio metrics look stable. Continue reviewing allocation, risk and exposure regularly."});
+if(tips.length===0)tips.push({title:"Elite Balance Detected",text:"Your allocation, diversification and risk profile look structurally balanced."});
+
 return tips.slice(0,8);
 }
 
